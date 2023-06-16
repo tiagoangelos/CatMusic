@@ -1,0 +1,86 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+header {
+    background-color: var(--color-bg); 
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+header h1 {
+    background-color: var(--color-primary);
+    color: var(--color-secundary);
+    transform: rotate(-2deg);
+    box-shadow: 10px 5px 5px var(--color-shadow);
+}
+
+header h1:hover{
+    transform: rotate(-0deg);
+    box-shadow: 10px 5px 5px var(--color-shadow-hover);
+    cursor: pointer;
+}
+
+#imgLogo {
+    height: 10%;
+    width: 10%;
+    min-height: 110px;
+    min-width: 110px;
+}
+
+#form-search {
+    display: flex;
+}
+
+#search{
+    font-size: medium;
+    min-height: 35px;
+    min-width: 350px;
+    height: 100%;
+    width: 100%;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+#search:hover {
+    background-color: var(--color-search-hover);
+    cursor: auto;
+}
+
+#btnSearch {
+    background-color: var( --color-primary);
+    color: var(--color-secundary);
+    border-color: var(--color-secundary);
+    box-shadow: 10px 5px 5px var(--color-shadow);
+    margin-left: 5px;
+    min-height: 35px;
+    min-width: 100px;
+    font-size: medium;
+    border-radius: 5px;
+}
+
+#btnSearch:hover {
+    box-shadow: 10px 5px 5px var(--color-shadow-hover);
+    font-weight: bolder;
+}
+
+
+/*_______________smartphone_______________*/
+@media(max-width: 770px) {
+    #search{
+        min-height: 30px;
+        min-width: 260px;
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    #btnSearch {
+        min-height: 30px;
+        min-width: 70px;
+    }
+}
+

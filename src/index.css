@@ -1,0 +1,14 @@
+* body, html {
+  padding: 0;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+  --color-bg: #1639a1;
+  --color-primary: #f13835;
+  --color-secundary: #f5f5f5;
+  --color-shadow: #216bb5;
+  --color-shadow-hover: #ffffff;
+  --color-search-hover: #c8c3c3;
+}
