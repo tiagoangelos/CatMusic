@@ -5,15 +5,15 @@ import { useState } from 'react';
 function Home(){
     const [Search, setSearch] = useState('');
 
-    function TreatValue(str){        
+    const TreatValue = (str) => {        
         const strText = str;
         const withoutAccent = strText.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
         return withoutAccent.trim();
     }
 
-    function SongRequest(event){
-        event.preventDefault(); //no scrool in the page!
+    const SongRequest = (event) => {
+        event.preventDefault();
         const SearchValue = TreatValue(Search);
     }
 
@@ -34,7 +34,7 @@ function Home(){
                     <button id='btnSearch'>Search</button>
                 </form>
             </header>
-            
+
             <div>
                 <ul id='results-Search'></ul>
             </div>
