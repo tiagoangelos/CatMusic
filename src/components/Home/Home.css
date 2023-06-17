@@ -9,7 +9,8 @@ header {
     flex-direction: column;
     align-content: center;
     padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
+    
 }
 
 header h1 {
@@ -20,7 +21,7 @@ header h1 {
 }
 
 header h1:hover{
-    transform: rotate(-0deg);
+    transform: rotate(2deg);
     box-shadow: 10px 5px 5px var(--color-shadow-hover);
     cursor: pointer;
 }
