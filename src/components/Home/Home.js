@@ -12,6 +12,7 @@ function Home(){
     const loading = document.querySelector('#loading');
     const msgSpanError = document.querySelector('#msgSpanError');
     const msgSpanNothingFound = document.querySelector('#msgSpanNothingFound');
+    const resultSearch = document.querySelector('#result-search');
     
     //get input value
     const [Search, setSearch] = useState('');
@@ -57,15 +58,10 @@ function Home(){
 
     //insert results in the page
     const InsertResultsInThePage = (responseData) => {
-        if(responseData.total == 0){
-            msgSpanNothingFound.style.display = 'block';
-        }else{
-
-            console.log(responseData);
-
-        }
-
+         console.log(responseData);
     }
+
+    
 
     //request api
     const RequestApiOvh = (search) => {
@@ -114,7 +110,7 @@ function Home(){
             </div>
 
             <div>
-                <ul id='results-Search'></ul>
+                <ul id='result-search'></ul>
             </div>
 
         </div>
