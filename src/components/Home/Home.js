@@ -4,13 +4,15 @@ import ImgLogo from '../../assets/image/Logo.png';
 import { useState } from 'react';
 import axios from 'axios';
 import { BiError } from 'react-icons/bi';
+import { GiNothingToSay } from 'react-icons/gi';
 
 function Home(){
     //const's
     const btnSearch = document.querySelector('#btnSearch');
     const loading = document.querySelector('#loading');
     const msgSpanError = document.querySelector('#msgSpanError');
-
+    const msgSpanNothingFound = document.querySelector('#msgSpanNothingFound');
+    
     //get input value
     const [Search, setSearch] = useState('');
 
@@ -37,6 +39,7 @@ function Home(){
         btnSearch.style.backgroundColor = '#808080';
 
         msgSpanError.style.display = 'none';
+        msgSpanNothingFound.style.display = 'none';
         loading.style.display = 'flex';
     }
 
@@ -47,16 +50,20 @@ function Home(){
         btnSearch.style.backgroundColor = '#f13835';
 
         msgSpanError.style.display = 'none';
+        msgSpanNothingFound.style.display = 'none';
         loading.style.display = 'none';
     }
 
+
     //insert results in the page
     const InsertResultsInThePage = (responseData) => {
-        console.log(responseData)
-        
+        if(responseData.total == 0){
+            msgSpanNothingFound.style.display = 'block';
+        }else{
 
+            console.log(responseData);
 
-
+        }
 
     }
 
@@ -94,8 +101,12 @@ function Home(){
                 </form>
             </header>
 
-            <div>
-                <span id='msgSpanError'><BiError /> Something Went Wrong, Try Again!</span>
+            <div id='msgSpanNothingFound'>
+                <span><GiNothingToSay /> Sorry! Nothing Found...</span>
+            </div>
+
+            <div id='msgSpanError'>
+                <span><BiError /> Something Went Wrong, Try Again!</span>
             </div>
 
             <div id='loading'>

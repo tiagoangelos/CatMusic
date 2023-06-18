@@ -70,7 +70,7 @@ header h1:hover{
 }
 
 /*Body */
-#msgSpanError {
+#msgSpanError, #msgSpanNothingFound {
     display: none;
     align-items: center;
     font-size: larger;
