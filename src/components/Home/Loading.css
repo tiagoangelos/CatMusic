@@ -1,0 +1,20 @@
+#spinner {
+    border: 8px solid var(--color-search-hover);
+    border-left-color: var(--color-primary);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    animation: spinner 0.9s linear infinite;
+}
+
+@keyframes spinner{
+    to {transform: rotate(360deg);}
+}
+
+#loading{
+    background-color: transparent;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}

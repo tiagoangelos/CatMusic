@@ -69,6 +69,15 @@ header h1:hover{
     font-weight: bolder;
 }
 
+/*Body */
+#msgSpanError {
+    display: none;
+    align-items: center;
+    font-size: larger;
+    padding-top: 2rem;
+    color: var(--color-primary);
+}
+
 
 /*_______________smartphone_______________*/
 @media(max-width: 770px) {
