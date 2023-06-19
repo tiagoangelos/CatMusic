@@ -4,7 +4,7 @@ import ImgLogo from '../../assets/image/Logo.png';
 import { useState } from 'react';
 import axios from 'axios';
 import { BiError } from 'react-icons/bi';
-import { GiNothingToSay } from 'react-icons/gi';
+import { BiSad } from 'react-icons/bi';
 
 function Home(){
     //const's
@@ -41,6 +41,8 @@ function Home(){
 
         msgSpanError.style.display = 'none';
         msgSpanNothingFound.style.display = 'none';
+        resultSearch.style.display = 'none';
+
         loading.style.display = 'flex';
     }
 
@@ -50,18 +52,35 @@ function Home(){
         btnSearch.disabled = false;
         btnSearch.style.backgroundColor = '#f13835';
 
-        msgSpanError.style.display = 'none';
-        msgSpanNothingFound.style.display = 'none';
         loading.style.display = 'none';
+        resultSearch.style.display = 'block';
     }
 
-
-    //insert results in the page
-    const InsertResultsInThePage = (responseData) => {
-         console.log(responseData);
+    //error no-results:
+    const NothingFound = (Totalresults) => {
+        if(Totalresults == 0){
+            msgSpanNothingFound.style.display = 'block';
+        }else{
+            return Totalresults
+        }
     }
 
-    
+    //insert results in the page****
+    const InsertResultsInThePage = (response) => {
+        NothingFound(response.total); //verify error: nothing found
+
+        //insert results in  the page
+        console.log(response.data);
+
+        resultSearch.innerHTML = response.data.map(musics => `
+            <li className='musics'>
+                <img src='${musics.album.cover_xl}' className='musics-album'></img>
+                <span className='musics-artist'><strong>${musics.artist.name}</strong> - ${musics.title}</span>
+                <button className='btn' data-artist='${musics.artist.name}' data=-song-title'${musics.title}'>See Lyrics</button>
+            </li>
+        `).join('');
+
+    }
 
     //request api
     const RequestApiOvh = (search) => {
@@ -87,6 +106,7 @@ function Home(){
                 <form id='form-search' onSubmit={SongRequest}>
                     <input
                         required
+                        autoFocus
                         autoComplete='off'
                         id="search"
                         type="text"
@@ -97,21 +117,21 @@ function Home(){
                 </form>
             </header>
 
-            <div id='msgSpanNothingFound'>
-                <span><GiNothingToSay /> Sorry! Nothing Found...</span>
-            </div>
+            <section id='loading-session-and-erro'>
+                <div id='msgSpanNothingFound'>
+                    <span><BiSad />Nothing Found! Sorry</span>
+                </div>
 
-            <div id='msgSpanError'>
-                <span><BiError /> Something Went Wrong, Try Again!</span>
-            </div>
+                <div id='msgSpanError'>
+                    <span><BiError /> Something Went Wrong, Try Later!</span>
+                </div>
 
-            <div id='loading'>
-                <p id='spinner'></p>
-            </div>
+                <div id='loading'>
+                    <p id='spinner'></p>
+                </div>
+            </section>
 
-            <div>
-                <ul id='result-search'></ul>
-            </div>
+            <ul id='result-search'></ul>
 
         </div>
     )

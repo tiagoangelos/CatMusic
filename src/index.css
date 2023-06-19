@@ -4,11 +4,18 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+body {
+  background-color: var(--color-bg-body);
+}
+
 :root {
-  --color-bg: #1639a1;
+  --color-bg-header: #1639a1;
+  --color-bg-body: #F0FFFF;
   --color-primary: #f13835;
   --color-secundary: #f5f5f5;
   --color-shadow: #216bb5;
   --color-shadow-hover: #ffffff;
   --color-search-hover: #c8c3c3;
+  --color-results-search: #282727;
+  --color-shadow-btn-results-search: #305d8a;
 }
