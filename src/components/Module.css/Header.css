@@ -1,6 +1,4 @@
-* {
-    font-family: 'Montserrat', sans-serif;
-}
+/*Header */
 
 header {
     background-color: var(--color-bg-header); 
@@ -71,56 +69,8 @@ header h1:hover{
     font-weight: bolder;
 }
 
-/*Body */
-#msgSpanError, #msgSpanNothingFound {
-    display: none;
-    align-items: center;
-    font-size: larger;
-    padding-top: 2rem;
-    color: var(--color-primary);
-}
 
-#result-search {
-    list-style-type: none;
-    padding: 0;
-    margin: 30px auto;
-    max-width: 100%;
-    width: 600px;
-}
-
-#result-search li{
-    font-size: large;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-    color: var(--color-results-search);
-}
-
-#result-search li img {
-    height: 100px;
-    width: 100px;
-    border-radius: 5px;
-}
-
-#result-search li button {
-    background-color: var(--color-primary);
-    color: var(--color-secundary);
-    font-size: medium;
-    border-radius: 5px;
-    box-shadow: 6px 5px 5px var(--color-shadow-btn-results-search);
-}
-
-#result-search li button:hover {
-    box-shadow: 10px 5px 5px var(--color-bg-header);
-    font-weight: bold;
-}
-
-
-
-
-/*_______________smartphone_______________*/
+/*smartphone:*/
 @media(max-width: 770px) {
     #search{
         min-height: 30px;
@@ -134,4 +84,3 @@ header h1:hover{
         min-width: 70px;
     }
 }
-

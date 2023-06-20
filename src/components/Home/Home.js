@@ -1,5 +1,6 @@
-import './Home.css';
-import './Loading.css';
+import '../Module.css/Header.css';
+import '../Module.css/Loading.css';
+import '../Module.css/Body.css';
 import ImgLogo from '../../assets/image/Logo.png';
 import { useState } from 'react';
 import axios from 'axios';
@@ -17,12 +18,12 @@ function Home(){
     //get input value
     const [Search, setSearch] = useState('');
 
-    //treat input value 
+    //treat input value: tiny, removing accent's, removing space. 
     const TreatValue = (str) => {        
-        const strText = str;
-        const withoutAccent = strText.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        const strText = str.toLowerCase();        
+        const treatedValue = strText.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
-        return withoutAccent.trim();
+        return treatedValue.trim();
     }
 
     //no scrool in thepage, and call request-api
@@ -76,7 +77,6 @@ function Home(){
                 <button className='btn' data-artist='${musics.artist.name}' data=-song-title'${musics.title}'>See Lyrics</button>
             </li>
         `).join('');
-
     }
 
     //request api
@@ -103,7 +103,6 @@ function Home(){
                 <form id='form-search' onSubmit={SongRequest}>
                     <input
                         required
-                        autoFocus
                         autoComplete='off'
                         id="search"
                         type="text"
@@ -124,8 +123,9 @@ function Home(){
                 </div>
 
                 <div id='loading'>
-                    <p id='spinner'></p>
-                </div>
+                    <span id='spinner'></span>
+                    <span id='msg-spinner'>please wait...</span>
+                </div> 
             </section>
 
             <ul id='result-search'></ul>
