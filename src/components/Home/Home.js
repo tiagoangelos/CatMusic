@@ -14,6 +14,7 @@ function Home(){
     const msgSpanError = document.querySelector('#msgSpanError');
     const msgSpanNothingFound = document.querySelector('#msgSpanNothingFound');
     const resultSearch = document.querySelector('#result-search');
+    const btnSeeLyrics = document.querySelector('#btn-see-lyrics');
     
     //get input value
     const [Search, setSearch] = useState('');
@@ -65,6 +66,12 @@ function Home(){
             return Totalresults
         }
     }
+    
+
+    //body - capa, artista, titulo, letra e tradução**********
+    //btn-see-lyrics -- addEventListernner em react:
+    
+    
 
     //insert results in the page
     const InsertResultsInThePage = (response) => {
@@ -74,7 +81,7 @@ function Home(){
             <li className='musics'>
                 <img src='${musics.album.cover_xl}' className='musics-album'></img>
                 <span className='musics-artist'><strong>${musics.artist.name}</strong> - ${musics.title}</span>
-                <button className='btn' data-artist='${musics.artist.name}' data=-song-title'${musics.title}'>See Lyrics</button>
+                <button className='btn' id='btn-see-lyrics' data-artist='${musics.artist.name}' data=-song-title'${musics.title}'>See Lyrics</button>
             </li>
         `).join('');
     }
