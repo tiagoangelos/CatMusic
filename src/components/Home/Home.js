@@ -65,12 +65,9 @@ function Home(){
         }
     }
 
-    //insert results in the page****
+    //insert results in the page
     const InsertResultsInThePage = (response) => {
         NothingFound(response.total); //verify error: nothing found
-
-        //insert results in  the page
-        console.log(response.data);
 
         resultSearch.innerHTML = response.data.map(musics => `
             <li className='musics'>
@@ -132,7 +129,6 @@ function Home(){
             </section>
 
             <ul id='result-search'></ul>
-
         </div>
     )
 }

@@ -10,18 +10,20 @@ header {
     align-content: center;
     padding-top: 1rem;
     padding-bottom: 2rem;
-    
 }
 
 header h1 {
     background-color: var(--color-primary);
     color: var(--color-secundary);
-    transform: rotate(-2deg);
     box-shadow: 10px 5px 5px var(--color-shadow);
+    margin-bottom: 30px;
+    transform: rotate(0deg);
+    transition: .2s ease;
 }
 
 header h1:hover{
-    transform: rotate(2deg);
+    transform: rotate(-2deg);
+    transition: transform .3s ease;
     box-shadow: 10px 5px 5px var(--color-shadow-hover);
     cursor: pointer;
 }
