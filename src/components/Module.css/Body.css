@@ -1,8 +1,10 @@
 /*Body */
 
-#msgSpanError, #msgSpanNothingFound {
+#msgSpanError, #msgSpanNothingFound, #msgSpanLyricsNotFound {
     display: none;
     align-items: center;
+    align-content: center;
+    text-align: center;
     font-size: larger;
     padding-top: 2rem;
     color: var(--color-primary);
@@ -63,23 +65,53 @@
     box-shadow: 10px 5px 5px var(--color-search-hover);
 }
 
-#info-preview-and-title {
+#artist-and-title {
+    max-width: 730px;
+    padding: 3rem;
+}
+
+#artist-and-title #infor-title {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    align-content: center;
 }
 
-#info-preview-and-title #infor-title {
+/*Lyrics Container */
+#lyrics-container {
+    display: flex;
     padding: 1rem;
+    justify-content: space-between;
 }
 
-#info-preview-and-title #infor-preview {
-    width: 400px;
-    padding: 1rem;
+#lyrics-music, #lyrics-translation {
+    align-items: center;
+    align-content: center;
+}
+
+#lyrics-container #lyrics-music #h1-lyrics, #h1-translate{
+    font-weight: bolder;
+    text-decoration: underline;
+    font-size: xx-large;
+}
+
+#lyrics-container #lyrics-music {
+    width: 50%;
+    align-content: left;
+    font-size: smaller;
+    margin: 10px;
+}
+
+#lyrics-container #lyrics-translation {
+    width: 50%;
+    height: auto;
+    align-content: right;
+    font-size: smaller;
+    margin: 10px;
 }
 
 
 /*smartphone:*/
-@media(max-width: 770px) {
+@media(max-width: 980px) {
     #result-search {
         max-width: 95%;
     }
@@ -96,13 +128,38 @@
         padding: 2rem;
     }
 
-    #img-album #img-album-lyrics{
+    #img-album #img-album-lyrics {
         height: 140px;
         width: 140px;
     }
 
-    #info-preview-and-title #infor-preview{
+    #artist-and-title {
         width: 90%;
+        padding: 1rem;
     }
 
+    #artist-and-title #infor-title {
+        display: block;
+        align-items: center;
+        align-content: center;
+        padding: 0;
+    }
+
+    #lyrics-container {
+        flex-direction: column;
+    }
+
+    #lyrics-container #lyrics-music {
+        width: 100%;
+        align-content: center;
+        align-items: center;
+        margin: 0;
+    }
+    
+    #lyrics-container #lyrics-translation {
+        width: 100%;
+        align-content: center;
+        align-items: center;
+        margin: 0;
+    }  
 }

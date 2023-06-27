@@ -71,7 +71,7 @@ header h1:hover{
 
 
 /*smartphone:*/
-@media(max-width: 770px) {
+@media(max-width: 980px) {
     #search{
         min-height: 30px;
         min-width: 260px;

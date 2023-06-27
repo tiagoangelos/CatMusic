@@ -6,6 +6,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { BiError } from 'react-icons/bi';
 import { BiSad } from 'react-icons/bi';
+import { VscSearchStop } from 'react-icons/vsc';
 
 function Home(){
     //const's
@@ -13,11 +14,16 @@ function Home(){
     const loading = document.querySelector('#loading');
     const msgSpanError = document.querySelector('#msgSpanError');
     const msgSpanNothingFound = document.querySelector('#msgSpanNothingFound');
+    const msgSpanLyricsNotFound = document.querySelector('#msgSpanLyricsNotFound');
     const resultSearch = document.querySelector('#result-search');
-    
+
     const infoBasic = document.querySelector('#info-basic');
     const imgAlbum = document.querySelector('#img-album');
-    const infoPreviewAndTitle = document.querySelector('#info-preview-and-title');
+    const artistAndTitle = document.querySelector('#artist-and-title');
+    const hr = document.querySelector('#hr');
+    const lyricsContainer = document.querySelector('#lyrics-container');
+    const lyricsMusic = document.querySelector('#lyrics-music');
+    const lyricsTranslation = document.querySelector('#lyrics-translation');
 
     //get input value
     const [Search, setSearch] = useState('');
@@ -46,9 +52,12 @@ function Home(){
 
         msgSpanError.style.display = 'none';
         msgSpanNothingFound.style.display = 'none';
+        msgSpanLyricsNotFound.style.display = 'none';
         
         resultSearch.style.display = 'none';
         infoBasic.style.display = 'none';
+        hr.style.display = 'none';
+        lyricsContainer.style.display = 'none';
 
         loading.style.display = 'flex';
     }
@@ -72,11 +81,26 @@ function Home(){
 
         msgSpanError.style.display = 'none';
         msgSpanNothingFound.style.display = 'none';
-
         resultSearch.style.display = 'none';
         loading.style.display = 'none';
 
         infoBasic.style.display = 'flex';
+        hr.style.display = 'block';
+        lyricsContainer.style.display = 'flex';
+    }
+
+    //request - lyrics not found - fron-end
+    function RequestLyricsNotFound(){
+        btnSearch.textContent = 'Search';
+        btnSearch.disabled = false;
+        btnSearch.style.backgroundColor = '#f13835';
+
+        loading.style.display = 'none';
+
+        resultSearch.style.display = 'none'; 
+        hr.style.display = 'none';
+        infoBasic.style.display = 'none';
+        lyricsContainer.style.display = 'none';
     }
 
     //error: 0 results for search:
@@ -88,26 +112,87 @@ function Home(){
         }
     }
 
-    //request music-selected
-    function RequestLyrics(imageAlbum, artist, musicTitle, musicPreview){
-        //loading
+    //error: lyrics not found
+    function lyricsNotFound(){
+        msgSpanLyricsNotFound.style.display = 'block';
+        RequestLyricsNotFound();
+    }
+
+    //insert infor, lyrics/translate on the page 
+    function InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate){
+        if(!translate){
+            imgAlbum.innerHTML = `
+                <img src='${imageAlbum}' alt='img-Album' id='img-album-lyrics'></img>
+            `;
+
+            artistAndTitle.innerHTML = `
+                <h2 id='infor-title'><strong>${artist}</strong> - ${musicTitle}</h2> 
+            `;
+
+            hr.innerHTML = `<hr>`;
+
+            lyricsMusic.innerHTML = `
+                <h1 id='h1-lyrics'><strong>Lyrics</strong><h1>
+                <p>[${musicTitle}]</p>
+                <p>${lyrics}</p>
+            `;
+
+            lyricsTranslation.innerHTML = ``;
+
+            requestLyricsFinish();
+        }else{
+            imgAlbum.innerHTML = `
+                <img src='${imageAlbum}' alt='img-Album' id='img-album-lyrics'></img>
+            `;
+
+            artistAndTitle.innerHTML = `
+                <h2 id='infor-title'><strong>${artist}</strong> - ${musicTitle}</h2> 
+            `;
+
+            hr.innerHTML = `<hr>`;
+
+            lyricsMusic.innerHTML = `
+                <h1 id='h1-lyrics'><strong>Lyrics</strong><h1>
+                <p>[${musicTitle}]</p>
+                <p>${lyrics}</p>
+            `;
+
+            lyricsTranslation.innerHTML = `
+                <h1 id='h1-translate'><strong>Translation</strong><h1>
+                <p>${translate}</p>
+            `;
+
+            requestLyricsFinish();
+        }
+    }
+
+    //request lyrics, translate - at vagalume
+    const RequestLyrics = async (imageAlbum, artist, musicTitle) => {
         WaitForSearch();
 
-        //insert infor-basic on the page
-        imgAlbum.innerHTML = `
-            <img src='${imageAlbum}' alt='img-Album' id='img-album-lyrics'></img>
-        `;
+        const apiVagalume = process.env.REACT_APP_API_VAGALUME;
+        const apiKey = process.env.REACT_APP_API_VAGALUME_KEY;
 
-        infoPreviewAndTitle.innerHTML = `
-            <h2 id='infor-title'><strong>${artist}</strong> - ${musicTitle}</h2>
-            <audio controls='false' id='infor-preview'>
-                <source src=${musicPreview} type='audio/mpeg'></source>
-            </audio>    
-        `;
+        const response = await fetch(`${apiVagalume}art=${artist}&mus=${musicTitle}&apikey=${apiKey}`);
+        const data = await response.json()
+        .then(function(data){
+            const lang = data.mus[0].lang;
+            
+            if(lang == 1){
+                const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+                InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics);
+            }else{
+                const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+                const translate = data.mus[0].translate[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
 
-        requestLyricsFinish();
+                InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate);
+            }
+                       
+        }).catch(function(error){
+            lyricsNotFound();
+        })
     }
-    
+
     //insert results in the page
     function InsertResultsInThePage(response){
         NothingFound(response.total); //verify error: nothing found
@@ -120,9 +205,8 @@ function Home(){
                 const imageAlbum = clickedElement.getAttribute('data-image-album');
                 const artist = clickedElement.getAttribute('data-artist');
                 const musicTitle = clickedElement.getAttribute('data-music-title');
-                const musicPreview = clickedElement.getAttribute('data-audio-preview');
                 
-                RequestLyrics(imageAlbum, artist, musicTitle, musicPreview);
+                RequestLyrics(imageAlbum, artist, musicTitle);
             }
         });
 
@@ -130,7 +214,7 @@ function Home(){
             <li className='musics'>
                 <img src='${musics.album.cover_xl}' className='musics-album'></img>
                 <span className='musics-artist'><strong>${musics.artist.name}</strong> - ${musics.title}</span>
-                <button className='btn' id='btn-see-lyrics' data-image-album=${musics.album.cover_xl} data-artist='${musics.artist.name}' data-music-title='${musics.title}' data-audio-preview=${musics.preview}>See Lyrics</button>
+                <button className='btn' id='btn-see-lyrics' data-image-album=${musics.album.cover_xl} data-artist='${musics.artist.name}' data-music-title='${musics.title}'>See Lyrics</button>
             </li>
         `).join('');
     }
@@ -158,11 +242,12 @@ function Home(){
                 <h1 id='#'>Search Lyrics' Music</h1>
                 <form id='form-search' onSubmit={SongRequest}>
                     <input
+                        autoFocus
                         required
                         autoComplete='off'
                         id="search"
                         type="text"
-                        placeholder="Type Music Or Artist..."
+                        placeholder="Artist, Music..."
                         onChange={(event) => setSearch(event.target.value)}
                     />
                     <button id='btnSearch' disabled={false}>Search</button>
@@ -171,16 +256,20 @@ function Home(){
 
             <div id='loading'>
                 <span id='spinner'></span>
-                <span id='msg-spinner'>please wait...</span>
+                <span id='msg-spinner'>Loading...</span>
             </div> 
 
-            <section id='loading-session-and-erro'>
+            <section id='Session-and-erro'>
                 <div id='msgSpanNothingFound'>
-                    <span><BiSad />Nothing Found! Sorry</span>
+                    <span><BiSad /> '0' Results! for your search...</span>
                 </div>
 
                 <div id='msgSpanError'>
-                    <span><BiError /> Something Went Wrong, Try Later!</span>
+                    <span><BiError /> Conection error! Try Later...</span>
+                </div>
+
+                <div id='msgSpanLyricsNotFound'>
+                    <span><VscSearchStop /> Lyrics not available! Try Later...</span>
                 </div>
             </section>
 
@@ -188,7 +277,14 @@ function Home(){
 
             <section id='info-basic'>
                 <div id='img-album'></div>
-                <div id='info-preview-and-title'></div>
+                <div id='artist-and-title'></div>
+            </section>
+
+            <div id='hr'></div>
+
+            <section id='lyrics-container'>
+                <div id='lyrics-music'></div>
+                <div id='lyrics-translation'></div>
             </section>
 
         </div>
