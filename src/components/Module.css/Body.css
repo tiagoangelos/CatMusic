@@ -40,7 +40,7 @@
     color: var(--color-secundary);
     font-size: medium;
     border-radius: 5px;
-    box-shadow: 6px 5px 5px var(--color-shadow-btn-results-search);
+    box-shadow: 6px 5px 5px var(--color-secundary);
 }
 
 #result-search li button:hover {
@@ -62,7 +62,7 @@
     height: 180px;
     width: 180px;
     border-radius: 5px;
-    box-shadow: 10px 5px 5px var(--color-search-hover);
+    box-shadow: 6px 5px 5px var(--color-search-hover);
 }
 
 #artist-and-title {
@@ -108,6 +108,15 @@
     font-size: smaller;
     margin: 10px;
 }
+
+#lyrics-container #lyrics-translation #h1-translate {
+    color: var(--color-search-hover);
+}
+
+#lyrics-container #lyrics-translation #p-translate {
+    color: var(--color-search-hover);
+}
+
 
 
 /*smartphone:*/

@@ -1,9 +1,11 @@
+import '../Module.css/Navbar.css';
 import '../Module.css/Header.css';
 import '../Module.css/Loading.css';
 import '../Module.css/Body.css';
 import ImgLogo from '../../assets/image/Logo.png';
 import { useState } from 'react';
 import axios from 'axios';
+import { CgSearchFound } from 'react-icons/cg';
 import { BiError } from 'react-icons/bi';
 import { BiSad } from 'react-icons/bi';
 import { VscSearchStop } from 'react-icons/vsc';
@@ -159,7 +161,7 @@ function Home(){
 
             lyricsTranslation.innerHTML = `
                 <h1 id='h1-translate'><strong>Translation</strong><h1>
-                <p>${translate}</p>
+                <p id='p-translate'>${translate}</p>
             `;
 
             requestLyricsFinish();
@@ -237,9 +239,20 @@ function Home(){
 
     return (
         <div>
+            <nav id='navbar'>
+                <h2 id='h2-primary'>
+                    <img src={ImgLogo}></img>
+                    <p>Cat Music</p>
+                </h2>
+                <h2 id='h2-secundary'>
+                    <CgSearchFound />
+                    <p> 00</p>
+                </h2>
+            </nav>
+
             <header>
-                <img src={ImgLogo} id='imgLogo'></img>
-                <h1 id='#'>Search Lyrics' Music</h1>
+                <h1>Search Your Favorite Lyric's Music In This App</h1>
+                <p>From Ovh, Vagalume Api Oficial</p>
                 <form id='form-search' onSubmit={SongRequest}>
                     <input
                         autoFocus
@@ -269,7 +282,7 @@ function Home(){
                 </div>
 
                 <div id='msgSpanLyricsNotFound'>
-                    <span><VscSearchStop /> Lyrics not available! Try Later...</span>
+                    <span><VscSearchStop /> Lyrics available! Try Later...</span>
                 </div>
             </section>
 

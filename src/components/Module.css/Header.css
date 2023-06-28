@@ -2,34 +2,55 @@
 
 header {
     background-color: var(--color-bg-header);
+    background-image: url(../../assets/image/Background/background-image.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     align-items: center;
     flex-direction: column;
     align-content: center;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 header h1 {
-    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bolder;
+    max-width: 600px;
     color: var(--color-secundary);
-    box-shadow: 10px 5px 5px var(--color-shadow);
-    margin-bottom: 30px;
-    transform: rotate(0deg);
-    transition: .2s ease;
+    text-shadow: 5px 4px 4px var(--color-primary);
+    animation: fliptitle 2s;
 }
 
-header h1:hover{
-    transform: rotate(-2deg);
-    transition: transform .3s ease;
-    box-shadow: 10px 5px 5px var(--color-shadow-hover);
-    cursor: pointer;
+header p {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    font-size: large;
+    font-weight: bolder;
+    color: var(--color-search-hover);
 }
+
+@keyframes fliptitle {
+    from{
+        transform: rotateX(80deg);
+    }
+    
+    to{
+        transform: rotateX(0deg);
+    }
+}
+
 
 #imgLogo {
     height: 10%;
     width: 10%;
-    min-height: 110px;
+    min-height: 120px;
     min-width: 110px;
 }
 
@@ -44,6 +65,7 @@ header h1:hover{
     height: 100%;
     width: 100%;
     border: 2px solid transparent;
+    color: var(--color-bg-body);
     border-radius: 5px;
 }
 
@@ -56,7 +78,7 @@ header h1:hover{
     background-color: var( --color-primary);
     color: var(--color-secundary);
     border-color: var(--color-secundary);
-    box-shadow: 10px 5px 5px var(--color-shadow);
+    box-shadow: 10px 5px 5px var(--color-secundary);
     margin-left: 5px;
     min-height: 35px;
     min-width: 100px;
@@ -65,7 +87,7 @@ header h1:hover{
 }
 
 #btnSearch:hover {
-    box-shadow: 10px 5px 5px var(--color-shadow-hover);
+    box-shadow: 10px 5px 5px var(--color-primary);
     font-weight: bolder;
 }
 

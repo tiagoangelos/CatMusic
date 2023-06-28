@@ -1,0 +1,54 @@
+/*Nav-Bar */
+
+#navbar {
+    background-color: var(--color-bg-nav);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+#navbar #h2-primary{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+#navbar #h2-primary img{
+   width: 60px;
+   height: 40px; 
+}
+
+#navbar #h2-secundary{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+#navbar #h2-secundary p{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    color: var(--color-search-hover);
+}
+
+
+/*smartphone:*/
+@media(max-width: 980px){
+    #navbar{
+        padding: 0.5rem;
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+    }
+
+    #navbar #h2-primary{
+        display: flex;
+        align-items: center;
+        padding: 0.1rem;
+    }
+
+}

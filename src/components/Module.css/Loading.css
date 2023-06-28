@@ -6,7 +6,7 @@
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    animation: spinner .7s linear infinite;
+    animation: spinner .8s linear infinite;
 }
 
 @keyframes spinner{
