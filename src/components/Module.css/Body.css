@@ -58,8 +58,8 @@
 
 #img-album #img-album-lyrics {
     display: flex;
-    height: 180px;
-    width: 180px;
+    height: 190px;
+    width: 190px;
     border-radius: 5px;
     box-shadow: 6px 5px 5px var(--color-search-hover);
 }
@@ -155,8 +155,8 @@
     }
 
     #img-album #img-album-lyrics {
-        height: 140px;
-        width: 140px;
+        height: 170px;
+        width: 170px;
     }
 
     #artist-and-title {

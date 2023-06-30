@@ -272,7 +272,7 @@ function Home(){
                 </h2>
                 <h2 id='h2-secundary'>
                     <CgSearchFound />
-                    <p> 00</p>
+                    <p>-00</p>
                 </h2>
             </nav>
 
