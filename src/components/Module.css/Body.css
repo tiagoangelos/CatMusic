@@ -7,7 +7,6 @@
     text-align: center;
     font-size: larger;
     padding-top: 2rem;
-    color: var(--color-primary);
     font-weight: bold;
 }
 
@@ -76,6 +75,23 @@
     align-content: center;
 }
 
+/*Just Lyrics */
+#lyric-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#lyric-container #lyric{
+    width: 50%;
+    height: auto;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
 /*Lyrics Container */
 #lyrics-container {
     display: flex;
@@ -96,6 +112,7 @@
 
 #lyrics-container #lyrics-music {
     width: 50%;
+    height: auto;
     align-content: left;
     font-size: smaller;
     margin: 10px;
@@ -158,6 +175,11 @@
         flex-direction: column;
     }
 
+    #lyric-container #lyric{
+        width: 100%;
+        margin: 0;
+    }
+    
     #lyrics-container #lyrics-music {
         width: 100%;
         align-content: center;

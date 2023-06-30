@@ -11,7 +11,7 @@ import { BiSad } from 'react-icons/bi';
 import { VscSearchStop } from 'react-icons/vsc';
 
 function Home(){
-    //const's
+    //const's - initial
     const btnSearch = document.querySelector('#btnSearch');
     const loading = document.querySelector('#loading');
     const msgSpanError = document.querySelector('#msgSpanError');
@@ -19,10 +19,13 @@ function Home(){
     const msgSpanLyricsNotFound = document.querySelector('#msgSpanLyricsNotFound');
     const resultSearch = document.querySelector('#result-search');
 
+    //Const's Results - infor basic | lyrics | translate + infor
     const infoBasic = document.querySelector('#info-basic');
     const imgAlbum = document.querySelector('#img-album');
     const artistAndTitle = document.querySelector('#artist-and-title');
     const hr = document.querySelector('#hr');
+    const lyricContainer = document.querySelector('#lyric-container')
+    const lyric = document.querySelector('#lyric');
     const lyricsContainer = document.querySelector('#lyrics-container');
     const lyricsMusic = document.querySelector('#lyrics-music');
     const lyricsTranslation = document.querySelector('#lyrics-translation');
@@ -59,6 +62,7 @@ function Home(){
         resultSearch.style.display = 'none';
         infoBasic.style.display = 'none';
         hr.style.display = 'none';
+        lyricContainer.style.display = 'none';
         lyricsContainer.style.display = 'none';
 
         loading.style.display = 'flex';
@@ -75,19 +79,35 @@ function Home(){
         resultSearch.style.display = 'block';  
     }
 
-    //request - lyrics finish - fron-end
-    function requestLyricsFinish(){
+    //request - lyric BR finish - front-end
+    function requestLyricFinish(){
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
         btnSearch.style.backgroundColor = '#f13835';
 
-        msgSpanError.style.display = 'none';
-        msgSpanNothingFound.style.display = 'none';
         resultSearch.style.display = 'none';
         loading.style.display = 'none';
 
         infoBasic.style.display = 'flex';
         hr.style.display = 'block';
+
+        lyricContainer.style.display = 'flex';
+        lyricsContainer.style.display = 'none';
+    }
+
+    //request - lyrics EN finish - fron-end
+    function requestLyricsFinish(){
+        btnSearch.textContent = 'Search';
+        btnSearch.disabled = false;
+        btnSearch.style.backgroundColor = '#f13835';
+
+        resultSearch.style.display = 'none';
+        loading.style.display = 'none';
+
+        infoBasic.style.display = 'flex';
+        hr.style.display = 'block';
+
+        lyricContainer.style.display = 'none';
         lyricsContainer.style.display = 'flex';
     }
 
@@ -102,6 +122,7 @@ function Home(){
         resultSearch.style.display = 'none'; 
         hr.style.display = 'none';
         infoBasic.style.display = 'none';
+        lyricContainer.style.display = 'none';
         lyricsContainer.style.display = 'none';
     }
 
@@ -120,39 +141,44 @@ function Home(){
         RequestLyricsNotFound();
     }
 
+    //Css - Just Lyrics
+    function JustLyric(){
+        infoBasic.style.justifyContent = 'center';
+        
+        requestLyricFinish();
+    }
+
+    //Css - Lyrics + tranlate
+    function LyricsAndTranslate(){
+        infoBasic.style.justifyContent = 'left';
+        
+        requestLyricsFinish();
+    }
+
     //insert infor, lyrics/translate on the page 
     function InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate){
+        WaitForSearch();
+
+        imgAlbum.innerHTML = `
+            <img src='${imageAlbum}' alt='img-Album' id='img-album-lyrics'></img>
+        `;
+
+        artistAndTitle.innerHTML = `
+            <h2 id='infor-title'><strong>${artist}</strong> - ${musicTitle}</h2> 
+        `;
+
+        hr.innerHTML = `<hr>`;
+
+        //lyrics br or english
         if(!translate){
-            imgAlbum.innerHTML = `
-                <img src='${imageAlbum}' alt='img-Album' id='img-album-lyrics'></img>
-            `;
-
-            artistAndTitle.innerHTML = `
-                <h2 id='infor-title'><strong>${artist}</strong> - ${musicTitle}</h2> 
-            `;
-
-            hr.innerHTML = `<hr>`;
-
-            lyricsMusic.innerHTML = `
+            lyric.innerHTML = ` 
                 <h1 id='h1-lyrics'><strong>Lyrics</strong><h1>
                 <p>[${musicTitle}]</p>
                 <p>${lyrics}</p>
             `;
 
-            lyricsTranslation.innerHTML = ``;
-
-            requestLyricsFinish();
+            JustLyric();
         }else{
-            imgAlbum.innerHTML = `
-                <img src='${imageAlbum}' alt='img-Album' id='img-album-lyrics'></img>
-            `;
-
-            artistAndTitle.innerHTML = `
-                <h2 id='infor-title'><strong>${artist}</strong> - ${musicTitle}</h2> 
-            `;
-
-            hr.innerHTML = `<hr>`;
-
             lyricsMusic.innerHTML = `
                 <h1 id='h1-lyrics'><strong>Lyrics</strong><h1>
                 <p>[${musicTitle}]</p>
@@ -164,7 +190,7 @@ function Home(){
                 <p id='p-translate'>${translate}</p>
             `;
 
-            requestLyricsFinish();
+            LyricsAndTranslate();
         }
     }
 
@@ -295,11 +321,14 @@ function Home(){
 
             <div id='hr'></div>
 
+            <section id='lyric-container'>
+                <div id='lyric'></div>
+            </section>
+
             <section id='lyrics-container'>
                 <div id='lyrics-music'></div>
                 <div id='lyrics-translation'></div>
             </section>
-
         </div>
     )
 }
