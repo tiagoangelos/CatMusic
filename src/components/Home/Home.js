@@ -246,7 +246,7 @@ function Home(){
         `).join('');
     }
 
-    //request api with Axios
+    //request api with Fetch async await json
     const RequestApiOvh = async (search) => {
         WaitForSearch();
 
