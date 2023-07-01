@@ -4,7 +4,6 @@ import '../Module.css/Loading.css';
 import '../Module.css/Body.css';
 import ImgLogo from '../../assets/image/Logo.png';
 import { useState } from 'react';
-import axios from 'axios';
 import { CgSearchFound } from 'react-icons/cg';
 import { BiError } from 'react-icons/bi';
 import { BiSad } from 'react-icons/bi';
@@ -34,7 +33,7 @@ function Home(){
     const [Search, setSearch] = useState('');
 
     //treat input value: tiny, removing accent's, removing space. 
-    function TreatValue(str){        
+    const TreatValue = (str) => {        
         const strText = str.toLowerCase();        
         const treatedValue = strText.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
@@ -42,7 +41,7 @@ function Home(){
     }
 
     //receive value, call treat value, and pass to api
-    function SongRequest(event){
+    const SongRequest = (event) => {
         event.preventDefault();
         const SearchValue = TreatValue(Search);
 
@@ -50,7 +49,7 @@ function Home(){
     }
 
     //wait request - front-end:
-    function WaitForSearch(){
+    const WaitForSearch = () => {
         btnSearch.textContent = 'Wait...';
         btnSearch.disabled = true;
         btnSearch.style.backgroundColor = '#808080';
@@ -69,7 +68,7 @@ function Home(){
     }
 
     //request finish - front-end:
-    function SearchFinish(){
+    const SearchFinish = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
         btnSearch.style.backgroundColor = '#f13835';
@@ -80,7 +79,7 @@ function Home(){
     }
 
     //request - lyric BR finish - front-end
-    function requestLyricFinish(){
+    const requestLyricFinish = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
         btnSearch.style.backgroundColor = '#f13835';
@@ -96,7 +95,7 @@ function Home(){
     }
 
     //request - lyrics EN finish - fron-end
-    function requestLyricsFinish(){
+    const requestLyricsFinish = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
         btnSearch.style.backgroundColor = '#f13835';
@@ -112,7 +111,7 @@ function Home(){
     }
 
     //request - lyrics not found - fron-end
-    function RequestLyricsNotFound(){
+    const RequestLyricsNotFound = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
         btnSearch.style.backgroundColor = '#f13835';
@@ -127,7 +126,7 @@ function Home(){
     }
 
     //error: 0 results for search:
-    function NothingFound(Totalresults){
+    const NothingFound = (Totalresults) => {
         if(Totalresults == 0){
             msgSpanNothingFound.style.display = 'block';
         }else{
@@ -136,27 +135,27 @@ function Home(){
     }
 
     //error: lyrics not found
-    function lyricsNotFound(){
+    const lyricsNotFound = () => {
         msgSpanLyricsNotFound.style.display = 'block';
         RequestLyricsNotFound();
     }
 
     //Css - Just Lyrics
-    function JustLyric(){
+    const JustLyric = () => {
         infoBasic.style.justifyContent = 'center';
         
         requestLyricFinish();
     }
 
     //Css - Lyrics + tranlate
-    function LyricsAndTranslate(){
+    const LyricsAndTranslate = () => {
         infoBasic.style.justifyContent = 'left';
         
         requestLyricsFinish();
     }
 
     //insert infor, lyrics/translate on the page 
-    function InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate){
+    const InsertLyricsOnThePage = (imageAlbum, artist, musicTitle, lyrics, translate) => {
         WaitForSearch();
 
         imgAlbum.innerHTML = `
@@ -222,7 +221,7 @@ function Home(){
     }
 
     //insert results in the page
-    function InsertResultsInThePage(response){
+    const InsertResultsInThePage = (response) => {
         NothingFound(response.total); //verify error: nothing found
 
         //take music clicked, and call request!
@@ -248,14 +247,16 @@ function Home(){
     }
 
     //request api with Axios
-    function RequestApiOvh(search){
-        const apiOvh = process.env.REACT_APP_API_OVH;
+    const RequestApiOvh = async (search) => {
         WaitForSearch();
+
+        const apiOvh = process.env.REACT_APP_API_OVH;
         
-        axios.get(`${apiOvh}/suggest/${search}`)
-        .then(function (response){
+        const response = await fetch(`${apiOvh}/suggest/${search}`)
+        const data = response.json()
+        .then(function (data){
             SearchFinish();
-            InsertResultsInThePage(response.data);
+            InsertResultsInThePage(data);
         })
         .catch(function(error){
             SearchFinish();
@@ -283,7 +284,7 @@ function Home(){
                     <input
                         autoFocus
                         required
-                        autoComplete='off'
+                        autoComplete='on'
                         id="search"
                         type="text"
                         placeholder="Artist, Music..."
