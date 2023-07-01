@@ -4,10 +4,12 @@ import '../Module.css/Loading.css';
 import '../Module.css/Body.css';
 import ImgLogo from '../../assets/image/Logo.png';
 import { useState } from 'react';
+import axios  from 'axios';
 import { CgSearchFound } from 'react-icons/cg';
 import { BiError } from 'react-icons/bi';
 import { BiSad } from 'react-icons/bi';
 import { VscSearchStop } from 'react-icons/vsc';
+
 
 function Home(){
     //const's - initial
@@ -194,28 +196,30 @@ function Home(){
     }
 
     //request lyrics, translate - at vagalume
-    const RequestLyrics = async (imageAlbum, artist, musicTitle) => {
+    const RequestLyrics = (imageAlbum, artist, musicTitle) => {
         WaitForSearch();
 
         const apiVagalume = process.env.REACT_APP_API_VAGALUME;
         const apiKey = process.env.REACT_APP_API_VAGALUME_KEY;
 
-        const response = await fetch(`${apiVagalume}art=${artist}&mus=${musicTitle}&apikey=${apiKey}`);
-        const data = await response.json()
-        .then(function(data){
-            const lang = data.mus[0].lang;
+        axios.get(`${apiVagalume}art=${artist}&mus=${musicTitle}&apikey=${apiKey}`)
+        .then(function(response){
+           const data = response.data
             
-            if(lang == 1){
-                const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
-                InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics);
-            }else{
-                const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
-                const translate = data.mus[0].translate[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+           const lang = data.mus[0].lang;
+            
+           if(lang == 1){
+               const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+               InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics);
+           }else{
+               const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+               const translate = data.mus[0].translate[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
 
-                InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate);
-            }
-                       
-        }).catch(function(error){
+               InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate);
+           }
+
+        })
+        .catch(function(error){
             lyricsNotFound();
         })
     }
@@ -247,16 +251,15 @@ function Home(){
     }
 
     //request api with Fetch async await json
-    const RequestApiOvh = async (search) => {
+    const RequestApiOvh = (search) => {
         WaitForSearch();
 
         const apiOvh = process.env.REACT_APP_API_OVH;
         
-        const response = await fetch(`${apiOvh}/suggest/${search}`)
-        const data = response.json()
-        .then(function (data){
+        axios.get(`${apiOvh}/suggest/${search}`)
+        .then(function (response){
             SearchFinish();
-            InsertResultsInThePage(data);
+            InsertResultsInThePage(response.data);
         })
         .catch(function(error){
             SearchFinish();

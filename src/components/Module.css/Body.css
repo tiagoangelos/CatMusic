@@ -57,16 +57,17 @@
 }
 
 #img-album #img-album-lyrics {
+    width: 50%;
     display: flex;
     height: 190px;
     width: 190px;
     border-radius: 5px;
-    box-shadow: 6px 5px 5px var(--color-search-hover);
+    box-shadow: 4px 4px 4px var(--color-search-hover);
 }
 
 #artist-and-title {
-    max-width: 730px;
-    padding: 3rem;
+    max-width: 600px;
+    padding: 1rem;
 }
 
 #artist-and-title #infor-title {
@@ -95,13 +96,14 @@
 /*Lyrics Container */
 #lyrics-container {
     display: flex;
-    padding: 1rem;
     justify-content: space-between;
+    padding: 1rem;
 }
 
 #lyrics-music, #lyrics-translation {
     align-items: center;
     align-content: center;
+    margin: 5px;
 }
 
 #lyrics-container #lyrics-music #h1-lyrics, #h1-translate{
@@ -115,7 +117,7 @@
     height: auto;
     align-content: left;
     font-size: smaller;
-    margin: 10px;
+    margin: 5px;
 }
 
 #lyrics-container #lyrics-translation {
@@ -123,7 +125,7 @@
     height: auto;
     align-content: right;
     font-size: smaller;
-    margin: 10px;
+    margin: 5px;
 }
 
 #lyrics-container #lyrics-translation #h1-translate {
@@ -133,7 +135,6 @@
 #lyrics-container #lyrics-translation #p-translate {
     color: var(--color-search-hover);
 }
-
 
 
 /*smartphone:*/
