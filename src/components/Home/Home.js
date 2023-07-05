@@ -1,14 +1,13 @@
-import '../Module.css/Navbar.css';
+import Nav from './Nav';
 import '../Module.css/Header.css';
 import '../Module.css/Loading.css';
 import '../Module.css/Body.css';
-import ImgLogo from '../../assets/image/Logo.png';
 import { useState } from 'react';
 import axios  from 'axios';
-import { CgSearchFound } from 'react-icons/cg';
 import { BiError } from 'react-icons/bi';
 import { BiSad } from 'react-icons/bi';
 import { VscSearchStop } from 'react-icons/vsc';
+import {IncrementCount} from './request_count';
 
 
 function Home(){
@@ -110,6 +109,7 @@ function Home(){
 
         lyricContainer.style.display = 'none';
         lyricsContainer.style.display = 'flex';
+
     }
 
     //request - lyrics not found - fron-end
@@ -124,7 +124,7 @@ function Home(){
         hr.style.display = 'none';
         infoBasic.style.display = 'none';
         lyricContainer.style.display = 'none';
-        lyricsContainer.style.display = 'none';
+        lyricsContainer.style.display = 'none';    
     }
 
     //error: 0 results for search:
@@ -132,20 +132,21 @@ function Home(){
         if(Totalresults == 0){
             msgSpanNothingFound.style.display = 'block';
         }else{
-            return Totalresults
+            return Totalresults;
         }
     }
 
     //error: lyrics not found
     const lyricsNotFound = () => {
         msgSpanLyricsNotFound.style.display = 'block';
+
         RequestLyricsNotFound();
     }
 
     //Css - Just Lyrics
     const JustLyric = () => {
         infoBasic.style.justifyContent = 'center';
-        
+
         requestLyricFinish();
     }
 
@@ -159,7 +160,7 @@ function Home(){
     //insert infor, lyrics/translate on the page 
     const InsertLyricsOnThePage = (imageAlbum, artist, musicTitle, lyrics, translate) => {
         WaitForSearch();
-
+    
         imgAlbum.innerHTML = `
             <img src='${imageAlbum}' alt='img-Album' id='img-album-lyrics'></img>
         `;
@@ -170,7 +171,6 @@ function Home(){
 
         hr.innerHTML = `<hr>`;
 
-        //lyrics br or english
         if(!translate){
             lyric.innerHTML = ` 
                 <h1 id='h1-lyrics'><strong>Lyrics</strong><h1>
@@ -204,20 +204,21 @@ function Home(){
 
         axios.get(`${apiVagalume}art=${artist}&mus=${musicTitle}&apikey=${apiKey}`)
         .then(function(response){
-           const data = response.data
+            const data = response.data
             
-           const lang = data.mus[0].lang;
-            
-           if(lang == 1){
-               const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
-               InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics);
-           }else{
-               const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
-               const translate = data.mus[0].translate[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+            const lang = data.mus[0].lang;
 
-               InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate);
-           }
-
+            //music br or inter
+            if(lang == 1){
+                const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+                
+                InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics);
+            }else{
+                const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+                const translate = data.mus[0].translate[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
+                
+                InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics, translate);
+            }
         })
         .catch(function(error){
             lyricsNotFound();
@@ -227,6 +228,11 @@ function Home(){
     //insert results in the page
     const InsertResultsInThePage = (response) => {
         NothingFound(response.total); //verify error: nothing found
+
+        //FireStore - Count - Searched
+        if(response.total >= 1){
+            IncrementCount();
+        }
 
         //take music clicked, and call request!
         resultSearch.addEventListener('click', event => {
@@ -251,7 +257,7 @@ function Home(){
     }
 
     //request api with Fetch async await json
-    const RequestApiOvh = (search) => {
+    const RequestApiOvh = (search) => {  
         WaitForSearch();
 
         const apiOvh = process.env.REACT_APP_API_OVH;
@@ -269,18 +275,9 @@ function Home(){
 
     return (
         <div>
-            <nav id='navbar'>
-                <h2 id='h2-primary'>
-                    <img src={ImgLogo}></img>
-                    <p>Cat Music</p>
-                </h2>
-                <h2 id='h2-secundary'>
-                    <CgSearchFound />
-                    <p>-00</p>
-                </h2>
-            </nav>
+            <Nav />
 
-            <header>
+            <header href='#'>
                 <h1>Search Your Favorite Lyric's Music In This App</h1>
                 <p>From Ovh, Vagalume Api Oficial</p>
                 <form id='form-search' onSubmit={SongRequest}>
@@ -297,12 +294,12 @@ function Home(){
                 </form>
             </header>
 
-            <div id='loading'>
+            <div id='loading' href='#'>
                 <span id='spinner'></span>
                 <span id='msg-spinner'>Loading...</span>
             </div> 
 
-            <section id='Session-and-erro'>
+            <section id='Session-and-erro' href='#'>
                 <div id='msgSpanNothingFound'>
                     <span><BiSad /> '0' Results! for your search...</span>
                 </div>
@@ -316,20 +313,20 @@ function Home(){
                 </div>
             </section>
 
-            <ul id='result-search'></ul>
+            <ul id='result-search' href='#'></ul>
 
-            <section id='info-basic'>
+            <section id='info-basic' href='#'>
                 <div id='img-album'></div>
                 <div id='artist-and-title'></div>
             </section>
 
-            <div id='hr'></div>
+            <div id='hr' href='#'></div>
 
-            <section id='lyric-container'>
+            <section id='lyric-container' href='#'>
                 <div id='lyric'></div>
             </section>
 
-            <section id='lyrics-container'>
+            <section id='lyrics-container' href='#'>
                 <div id='lyrics-music'></div>
                 <div id='lyrics-translation'></div>
             </section>
