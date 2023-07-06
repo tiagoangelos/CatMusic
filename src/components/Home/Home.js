@@ -1,4 +1,4 @@
-import Nav from './Nav';
+import Nav from '../Nav/Nav';
 import '../Module.css/Header.css';
 import '../Module.css/Loading.css';
 import '../Module.css/Body.css';
@@ -7,7 +7,7 @@ import axios  from 'axios';
 import { BiError } from 'react-icons/bi';
 import { BiSad } from 'react-icons/bi';
 import { VscSearchStop } from 'react-icons/vsc';
-import {IncrementCount} from './request_count';
+import {IncrementCount} from '../../firebase/actions/RequestCount';
 
 
 function Home(){

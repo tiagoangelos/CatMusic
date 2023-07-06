@@ -2,7 +2,7 @@ import '../Module.css/Navbar.css';
 import ImgLogo from '../../assets/image/Logo.png';
 import { CgSearchFound } from 'react-icons/cg';
 import { collection, query, onSnapshot } from 'firebase/firestore';
-import {db} from '../../firebase/firebase';
+import {db} from '../../firebase/FirebaseConnect';
 import { useEffect, useState } from 'react';
 
 

@@ -1,6 +1,6 @@
 import { collection, query, getDocs } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore"; 
-import {db} from '../../firebase/firebase';
+import {db} from '../../firebase/FirebaseConnect';
 
 
 //Firebase: Take Current Value Request Count
