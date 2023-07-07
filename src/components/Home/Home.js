@@ -1,13 +1,16 @@
-import Nav from '../Nav/Nav';
+import '../Module.css/Navbar.css';
 import '../Module.css/Header.css';
-import '../Module.css/Loading.css';
 import '../Module.css/Body.css';
-import { useState } from 'react';
-import axios  from 'axios';
+import ImgLogo from '../../assets/image/Logo.png';
+import { useEffect, useState } from 'react';
+import { collection, query, onSnapshot } from 'firebase/firestore';
+import {db} from '../../firebase/FirebaseConnect';
+import {IncrementCount} from '../../firebase/actions/RequestCount';
+import { CgSearchFound } from 'react-icons/cg';
 import { BiError } from 'react-icons/bi';
 import { BiSad } from 'react-icons/bi';
 import { VscSearchStop } from 'react-icons/vsc';
-import {IncrementCount} from '../../firebase/actions/RequestCount';
+import axios  from 'axios';
 
 
 function Home(){
@@ -29,6 +32,18 @@ function Home(){
     const lyricsContainer = document.querySelector('#lyrics-container');
     const lyricsMusic = document.querySelector('#lyrics-music');
     const lyricsTranslation = document.querySelector('#lyrics-translation');
+
+    //FireStore dataBase real-time
+    const [requestCount, setRequestCount] = useState([]);
+
+    useEffect(() => {
+        const q = query(collection(db, 'request_count'));
+        onSnapshot(q, (querySnapshot) => {
+            setRequestCount(querySnapshot.docs.map(doc=>({
+                data: doc.data()
+            })))
+        })
+    }, [])
 
     //get input value
     const [Search, setSearch] = useState('');
@@ -275,7 +290,16 @@ function Home(){
 
     return (
         <div>
-            <Nav />
+            <nav id='navbar'>
+                <h2 id='h2-primary' href='#'>
+                    <img src={ImgLogo}></img>
+                    <p>Cat Music</p>
+                </h2>
+                <h2 id='h2-secundary'>
+                    <CgSearchFound />
+                    <p id='valueCurrentRequest'>{requestCount[0]?.data?.total}</p>
+                </h2>
+            </nav>
 
             <header href='#'>
                 <h1>Search Your Favorite Lyric's Music In This App</h1>
