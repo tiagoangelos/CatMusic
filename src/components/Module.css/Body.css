@@ -94,6 +94,7 @@
 #result-search li button:hover {
     box-shadow: 10px 5px 5px var(--color-bg-header);
     font-weight: bold;
+    cursor: pointer;
 }
 
 /*section information basic - info-basic*/
