@@ -288,6 +288,12 @@ function Home(){
         })
     }
 
+    //redirect To Pag Add Lyric Not Available
+    const RedirectToPag = () => {
+        const Link = 'https://vagalume.zendesk.com/hc/pt-br/articles/200726538-Cadastrar-artistas-e-letras#:~:text=Para%20adicionar%20novos%20artistas,artista%2C%20letra%20ou%20%C3%A1lbum%22.';
+        window.open(Link, '_blank');
+    }
+
     return (
         <div>
             <nav id='navbar'>
@@ -333,7 +339,8 @@ function Home(){
                 </div>
 
                 <div id='msgSpanLyricsNotFound'>
-                    <span><VscSearchStop /> Lyrics available! Try Later...</span>
+                    <div><VscSearchStop /> Lyrics available! Try Later Or...</div>
+                    <button id='btnSend' onClick={RedirectToPag}>Send Lyric</button>
                 </div>
             </section>
 

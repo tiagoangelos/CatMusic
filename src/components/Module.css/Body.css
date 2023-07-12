@@ -40,6 +40,24 @@
     font-weight: bold;
 }
 
+#btnSend {
+    font-size: medium; 
+    width: 110px;
+    height: 40px;
+    border: 2px solid var(--color-search-hover);
+    box-shadow: 5px 5px 5px var(--color-secundary);
+    color: var(--color-bg-body);
+    border-radius: 5px;
+    margin-top: 1.5rem;
+}
+
+#btnSend:hover {
+    background-color: var(--color-primary);
+    box-shadow: 5px 5px 5px var(--color-primary);
+    color: var(--color-secundary);
+    font-weight: bolder;
+}
+
 #result-search {
     list-style-type: none;
     padding: 0;
@@ -97,7 +115,7 @@
 
 #artist-and-title {
     max-width: 600px;
-    padding: 1rem;
+    padding: 2rem;
 }
 
 #artist-and-title #infor-title {
