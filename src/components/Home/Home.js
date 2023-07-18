@@ -219,12 +219,11 @@ function Home(){
 
         axios.get(`${apiVagalume}art=${artist}&mus=${musicTitle}&apikey=${apiKey}`)
         .then(function(response){
-            const data = response.data
-            
-            const lang = data.mus[0].lang;
+            const data = response.data          
+            const translate = data.mus[0].translate;
 
             //music br or inter
-            if(lang == 1){
+            if(!translate){
                 const lyrics = data.mus[0].text.replace(/(\r\n|\r|\n)/g, '<br>');
                 
                 InsertLyricsOnThePage(imageAlbum, artist, musicTitle, lyrics);
@@ -262,11 +261,16 @@ function Home(){
             }
         });
 
+        //removing accent of title music
+        const removingAccent = (string) => {
+            return string.replace(/[',!^`]/g, "");
+        }
+
         resultSearch.innerHTML = response.data.map(musics => `
             <li className='musics'>
                 <img src='${musics.album.cover_xl}' className='musics-album'></img>
                 <span className='musics-artist'><strong>${musics.artist.name}</strong> - ${musics.title}</span>
-                <button className='btn' id='btn-see-lyrics' data-image-album=${musics.album.cover_xl} data-artist='${musics.artist.name}' data-music-title='${musics.title}'>See Lyrics</button>
+                <button className='btn' id='btn-see-lyrics' data-image-album=${musics.album.cover_xl} data-artist='${musics.artist.name}' data-music-title='${removingAccent(musics.title)}'>See Lyrics</button>
             </li>
         `).join('');
     }
