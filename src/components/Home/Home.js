@@ -14,7 +14,6 @@ import axios  from 'axios';
 
 
 function Home(){
-    //const's - initial
     const btnSearch = document.querySelector('#btnSearch');
     const loading = document.querySelector('#loading');
     const msgSpanError = document.querySelector('#msgSpanError');
@@ -22,7 +21,6 @@ function Home(){
     const msgSpanLyricsNotFound = document.querySelector('#msgSpanLyricsNotFound');
     const resultSearch = document.querySelector('#result-search');
 
-    //Const's Results - infor basic | lyrics | translate + infor
     const infoBasic = document.querySelector('#info-basic');
     const imgAlbum = document.querySelector('#img-album');
     const artistAndTitle = document.querySelector('#artist-and-title');
@@ -33,7 +31,6 @@ function Home(){
     const lyricsMusic = document.querySelector('#lyrics-music');
     const lyricsTranslation = document.querySelector('#lyrics-translation');
 
-    //FireStore dataBase real-time
     const [requestCount, setRequestCount] = useState([]);
 
     useEffect(() => {
@@ -45,10 +42,8 @@ function Home(){
         })
     }, [])
 
-    //get input value
     const [Search, setSearch] = useState('');
 
-    //treat input value: tiny, removing accent's, removing space. 
     const TreatValue = (str) => {        
         const strText = str.toLowerCase();        
         const treatedValue = strText.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
@@ -56,7 +51,6 @@ function Home(){
         return treatedValue.trim();
     }
 
-    //receive value, call treat value, and pass to api
     const SongRequest = (event) => {
         event.preventDefault();
         const SearchValue = TreatValue(Search);
@@ -64,7 +58,6 @@ function Home(){
         RequestApiOvh(SearchValue);
     }
 
-    //wait request - front-end:
     const WaitForSearch = () => {
         btnSearch.textContent = 'Wait...';
         btnSearch.disabled = true;
@@ -83,7 +76,6 @@ function Home(){
         loading.style.display = 'flex';
     }
 
-    //request finish - front-end:
     const SearchFinish = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
@@ -94,7 +86,6 @@ function Home(){
         resultSearch.style.display = 'block';  
     }
 
-    //request - lyric BR finish - front-end
     const requestLyricFinish = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
@@ -110,7 +101,6 @@ function Home(){
         lyricsContainer.style.display = 'none';
     }
 
-    //request - lyrics EN finish - fron-end
     const requestLyricsFinish = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
@@ -127,7 +117,6 @@ function Home(){
 
     }
 
-    //request - lyrics not found - fron-end
     const RequestLyricsNotFound = () => {
         btnSearch.textContent = 'Search';
         btnSearch.disabled = false;
@@ -142,7 +131,6 @@ function Home(){
         lyricsContainer.style.display = 'none';    
     }
 
-    //error: 0 results for search:
     const NothingFound = (Totalresults) => {
         if(Totalresults == 0){
             msgSpanNothingFound.style.display = 'block';
@@ -151,28 +139,24 @@ function Home(){
         }
     }
 
-    //error: lyrics not found
     const lyricsNotFound = () => {
         msgSpanLyricsNotFound.style.display = 'block';
 
         RequestLyricsNotFound();
     }
 
-    //Css - Just Lyrics
     const JustLyric = () => {
         infoBasic.style.justifyContent = 'center';
 
         requestLyricFinish();
     }
 
-    //Css - Lyrics + tranlate
     const LyricsAndTranslate = () => {
         infoBasic.style.justifyContent = 'left';
         
         requestLyricsFinish();
     }
 
-    //insert infor, lyrics/translate on the page 
     const InsertLyricsOnThePage = (imageAlbum, artist, musicTitle, lyrics, translate) => {
         WaitForSearch();
     
@@ -210,7 +194,6 @@ function Home(){
         }
     }
 
-    //request lyrics, translate - at vagalume
     const RequestLyrics = (imageAlbum, artist, musicTitle) => {
         WaitForSearch();
 
@@ -239,16 +222,13 @@ function Home(){
         })
     }
 
-    //insert results in the page
     const InsertResultsInThePage = (response) => {
         NothingFound(response.total); //verify error: nothing found
 
-        //FireStore - Count - Searched
         if(response.total >= 1){
             IncrementCount();
         }
 
-        //take music clicked, and call request!
         resultSearch.addEventListener('click', event => {
             const clickedElement = event.target;
 
@@ -261,7 +241,6 @@ function Home(){
             }
         });
 
-        //removing accent of title music
         const removingAccent = (string) => {
             return string.replace(/[',!^`]/g, "");
         }
@@ -275,7 +254,6 @@ function Home(){
         `).join('');
     }
 
-    //request api with Fetch async await json
     const RequestApiOvh = (search) => {  
         WaitForSearch();
 
@@ -292,7 +270,6 @@ function Home(){
         })
     }
 
-    //redirect To Pag Add Lyric Not Available
     const RedirectToPag = () => {
         const Link = 'https://vagalume.zendesk.com/hc/pt-br/articles/200726538-Cadastrar-artistas-e-letras#:~:text=Para%20adicionar%20novos%20artistas,artista%2C%20letra%20ou%20%C3%A1lbum%22.';
         window.open(Link, '_blank');
