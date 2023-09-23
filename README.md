@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-#1° version: 04/07/23
+#1° version created in: 04/07/23
 
 ## Available Scripts
 
