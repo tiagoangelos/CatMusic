@@ -1,6 +1,6 @@
-#CatMusic
+# <a href="https://catmusic.vercel.app">CatMusic</a>
 
-<img src="./design/Front-end.png"></img>
+<img src="./design/Front-end.png" width="70%"></img>
 
 ## Getting Started with Create React App
 
