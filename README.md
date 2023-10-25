@@ -1,4 +1,4 @@
-# <a href="https://catmusic.vercel.app">CatMusic</a>
+# CatMusic
 
 <img src="./design/Front-end.png" width="70%"></img>
 
